@@ -18,7 +18,11 @@ jobs:
           npm install
           npm install -g cc-connect
       
-      - name: Run Bot
+      - name: Setup and Run Bot
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: cc-connect
+        run: |
+          mkdir -p ~/.cc-connect
+          cp -r config/* ~/.cc-connect/ 2>/dev/null || true
+          cp CLAUDE.md ~/.cc-connect/ 2>/dev/null || true
+          cc-connect
