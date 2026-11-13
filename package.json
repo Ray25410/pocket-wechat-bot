@@ -1,0 +1,14 @@
+{
+  "name": "pocket-wechat-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node claude-fast.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
