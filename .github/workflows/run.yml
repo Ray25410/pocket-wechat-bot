@@ -22,20 +22,8 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          # 强行删除它生成的空白配置，换成我们项目自带的
           rm -rf ~/.cc-connect
           mkdir -p ~/.cc-connect
           cp -rf config/* ~/.cc-connect/ 2>/dev/null || true
           cp CLAUDE.md ~/.cc-connect/ 2>/dev/null || true
-          
-          # 启动并保持后台运行
-          cc-connect weixin > bot.log 2>&1 &
-          
-          # 等待 15 秒，让二维码打印出来
-          sleep 15
-          
-          # 把日志打印到屏幕上
-          cat bot.log
-          
-          # 保持任务不退出
-          tail -f /dev/null
+          timeout 120 cc-connect weixin setup || true
