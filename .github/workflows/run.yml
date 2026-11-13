@@ -39,6 +39,9 @@ jobs:
           
           [[projects.platforms]]
           type = "weixin"
+          
+          [projects.platforms.options]
+          token = "SCAN_NEEDED"
           EOF
           
           cc-connect --config /home/runner/.cc-connect/config.toml > bot.log 2>&1 &
