@@ -24,7 +24,6 @@ jobs:
         run: |
           mkdir -p ~/.cc-connect
           
-          # 写入修正了数组格式的配置文件，并注入雷狮的人格
           cat << 'EOF' > ~/.cc-connect/config.toml
           [[projects]]
           name = "main"
@@ -42,5 +41,5 @@ jobs:
           type = "weixin"
           EOF
           
-          # 启动微信扫码
-          timeout 120 cc-connect weixin new --config /home/runner/.cc-connect/config.toml || true
+          cc-connect --config /home/runner/.cc-connect/config.toml > bot.log 2>&1 &
+          timeout 21600 tail -f bot.log || true
