@@ -22,9 +22,27 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          # 直接把项目里自带的配置复制到指定位置，并用绝对路径强行喂给它
-          cp -rf config/* ~/.cc-connect/ 2>/dev/null || true
-          cp CLAUDE.md ~/.cc-connect/ 2>/dev/null || true
+          mkdir -p ~/.cc-connect
           
-          # 强制使用 weixin new 生成新二维码，指定绝对路径的配置文件
+          # 直接用命令强行写一个合法的配置文件进去
+          cat << 'EOF' > ~/.cc-connect/config.toml
+          [projects.main]
+          name = "main"
+          
+          [projects.main.agent]
+          type = "claudecode"
+          
+          [projects.main.agent.options]
+          cmd = "node claude-fast.js"
+          mode = "acceptEdits"
+          system_prompt = "你是一个AI助手，请扮演一个猫娘跟我聊天。"
+          work_dir = "/home/runner/work/pocket-wechat-bot/pocket-wechat-bot"
+          
+          [projects.main.platforms]
+          
+          [projects.main.platforms.options]
+          allow_from = "*"
+          EOF
+          
+          # 强行启动生成二维码
           timeout 120 cc-connect weixin new --config /home/runner/.cc-connect/config.toml || true
