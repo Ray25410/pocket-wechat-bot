@@ -22,6 +22,9 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          rm -rf ~/.cc-connect
-          mkdir -p ~/.cc-connect
-          timeout 120 cc-connect weixin setup --project my-project || true
+          # 直接把项目里自带的配置复制到指定位置，并用绝对路径强行喂给它
+          cp -rf config/* ~/.cc-connect/ 2>/dev/null || true
+          cp CLAUDE.md ~/.cc-connect/ 2>/dev/null || true
+          
+          # 强制使用 weixin new 生成新二维码，指定绝对路径的配置文件
+          timeout 120 cc-connect weixin new --config /home/runner/.cc-connect/config.toml || true
