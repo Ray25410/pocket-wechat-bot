@@ -16,16 +16,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Clone cc-connect
-        run: git clone https://github.com/chenhg5/cc-connect.git /tmp/cc-connect
-      
-      - name: Build and install cc-connect
+      - name: Download cc-connect beta binary
         run: |
-          cd /tmp/cc-connect
-          go build -o /usr/local/bin/cc-connect .
-          chmod +x /usr/local/bin/cc-connect
+          curl -L -o cc-connect https://github.com/chenhg5/cc-connect/releases/download/v1.3.3-beta.4/cc-connect-linux-amd64
+          chmod +x cc-connect
       
       - name: Run Bot
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: cc-connect
+        run: ./cc-connect
