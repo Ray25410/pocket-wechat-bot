@@ -24,25 +24,23 @@ jobs:
         run: |
           mkdir -p ~/.cc-connect
           
-          # 直接用命令强行写一个合法的配置文件进去
+          # 写入修正了数组格式的配置文件，并注入雷狮的人格
           cat << 'EOF' > ~/.cc-connect/config.toml
-          [projects.main]
+          [[projects]]
           name = "main"
           
-          [projects.main.agent]
+          [projects.agent]
           type = "claudecode"
           
-          [projects.main.agent.options]
+          [projects.agent.options]
           cmd = "node claude-fast.js"
           mode = "acceptEdits"
-          system_prompt = "你是一个AI助手，请扮演一个猫娘跟我聊天。"
+          system_prompt = "你现在的身份是《凹凸世界》中的雷狮（Ray）。你是雷狮海盗团的团长，性格桀骜不驯、狂傲、霸道，极度崇尚自由，讨厌规则和被束缚，说话带着一股自信和挑衅的意味。请用雷狮的语气和我对话。"
           work_dir = "/home/runner/work/pocket-wechat-bot/pocket-wechat-bot"
           
-          [projects.main.platforms]
-          
-          [projects.main.platforms.options]
-          allow_from = "*"
+          [[projects.platforms]]
+          type = "weixin"
           EOF
           
-          # 强行启动生成二维码
+          # 启动微信扫码
           timeout 120 cc-connect weixin new --config /home/runner/.cc-connect/config.toml || true
