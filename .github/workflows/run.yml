@@ -22,13 +22,6 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          # 1. 先让 cc-connect 自己生成一份默认配置
-          cc-connect init || true
-          
-          # 2. 把我们项目里的角色设定（CLAUDE.md）覆盖进去
+          rm -rf ~/.cc-connect
           mkdir -p ~/.cc-connect
-          cp CLAUDE.md ~/.cc-connect/ 2>/dev/null || true
-          cp -rf config/* ~/.cc-connect/ 2>/dev/null || true
-          
-          # 3. 强行启动微信扫码
-          timeout 120 cc-connect weixin setup || true
+          timeout 120 cc-connect weixin setup --project my-project || true
