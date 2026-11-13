@@ -5,11 +5,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone pocket-wechat-bot
-        run: git clone https://github.com/99cz99/pocket-wechat-bot.git .
-      
-      - name: Clone cc-connect
-        run: git clone https://github.com/chenhg5/cc-connect.git /tmp/cc-connect
+      - name: Checkout code
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -17,9 +14,10 @@ jobs:
           node-version: '20'
       
       - name: Install dependencies
-        run: |
-          cd pocket-wechat-bot
-          npm install
+        run: npm install
+      
+      - name: Clone cc-connect
+        run: git clone https://github.com/chenhg5/cc-connect.git /tmp/cc-connect
       
       - name: Build and install cc-connect
         run: |
@@ -30,6 +28,4 @@ jobs:
       - name: Run Bot
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          cd pocket-wechat-bot
-          cc-connect
+        run: cc-connect
