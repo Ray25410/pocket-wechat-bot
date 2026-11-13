@@ -1,7 +1,6 @@
 {
   "name": "pocket-wechat-bot",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "start": "node claude-fast.js"
   },
