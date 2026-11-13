@@ -10,6 +10,12 @@ jobs:
         with:
           node-version: '20'
       - run: npm install
-      - run: node claude-fast.js
+      - name: Download cc-connect
+        run: |
+          curl -L -o cc-connect.tar.gz https://github.com/99cz99/pocket-wechat-bot/releases/download/v1.2.0/cc-connect-linux-amd64.tar.gz
+          tar -xzf cc-connect.tar.gz
+          chmod +x cc-connect
+      - name: Run Bot
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: ./cc-connect
