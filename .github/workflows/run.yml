@@ -14,14 +14,11 @@ jobs:
           node-version: '20'
       
       - name: Install dependencies
-        run: npm install
-      
-      - name: Download cc-connect beta binary
         run: |
-          curl -L -o cc-connect https://github.com/chenhg5/cc-connect/releases/download/v1.3.3-beta.4/cc-connect-linux-amd64
-          chmod +x cc-connect
+          npm install
+          npm install -g cc-connect
       
       - name: Run Bot
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: ./cc-connect
+        run: cc-connect
